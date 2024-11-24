@@ -1,9 +1,16 @@
 import React, { useState } from "react";
-import questions from "../data/questions";
+import { useQuiz } from "../context/QuizContext";
+import { useNavigate } from "react-router-dom";
 
 function Quiz() {
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const {
+    questions,
+    currentQuestionIndex,
+    setCurrentQuestionIndex,
+    saveAnswer,
+  } = useQuiz();
   const [selectedAnswer, setSelectedAnswer] = useState("");
+  const navigate = useNavigate();
 
   const currentQuestion = questions[currentQuestionIndex];
 
@@ -12,11 +19,13 @@ function Quiz() {
   };
 
   const handleNextQuestion = () => {
+    saveAnswer(currentQuestion.id, selectedAnswer);
+
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
       setSelectedAnswer("");
     } else {
-      alert("Quiz Completed");
+      navigate("/result");
     }
   };
 
