@@ -19,7 +19,7 @@ function Result() {
 
   const reset = () => {
     resetQuiz();
-    navigate("/quiz");
+    navigate("/");
   };
 
   const { width, height } = useWindowSize();
@@ -27,7 +27,9 @@ function Result() {
   return (
     <div className="results-container max-w-xl mx-auto p-4 text-center">
       {/* Confetti component */}
-      {score === questions.length && <Confetti width={width} height={height} />}
+      {score === questions.length && (
+        <Confetti width={width - 20} height={height} />
+      )}
       <h1 className="text-3xl font-bold mb-4">Quiz Results</h1>
       <p className="text-xl">
         You scored {score}/{questions.length}!
@@ -52,6 +54,8 @@ function Result() {
                 Your answer: {answer.selectedOption} {isCorrect ? "✅" : "❌"}
                 <br />
                 Correct answer: {question.correctOption}
+                <br />
+                Explanation: {question.explanation}
               </li>
             );
           })}
