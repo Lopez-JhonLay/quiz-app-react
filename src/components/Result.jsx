@@ -1,6 +1,8 @@
 import React from "react";
 import { useQuiz } from "../context/QuizContext";
 import { useNavigate } from "react-router-dom";
+import Confetti from "react-confetti";
+import { useWindowSize } from "react-use";
 
 function Result() {
   const { questions, userAnswers, resetQuiz } = useQuiz();
@@ -20,8 +22,12 @@ function Result() {
     navigate("/quiz");
   };
 
+  const { width, height } = useWindowSize();
+
   return (
     <div className="results-container max-w-xl mx-auto p-4 text-center">
+      {/* Confetti component */}
+      {score === questions.length && <Confetti width={width} height={height} />}
       <h1 className="text-3xl font-bold mb-4">Quiz Results</h1>
       <p className="text-xl">
         You scored {score}/{questions.length}!
